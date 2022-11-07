@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1024490748048",
+    "project_id": "zuritask-48678",
+    "storage_bucket": "zuritask-48678.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1024490748048:android:8e93e00eb61d1c3f474015",
+        "android_client_info": {
+          "package_name": "com.example.zuri_task"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1024490748048-54benpfr54e60edl9tt1gko4jtsgbjrm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0FuwwBT9oq0ni8zLn3oGh7sb2y8Pio00"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1024490748048-54benpfr54e60edl9tt1gko4jtsgbjrm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
