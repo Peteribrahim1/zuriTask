@@ -4,6 +4,7 @@ import 'package:zuri_task/screens/forgotPassword_screen.dart';
 import 'package:zuri_task/screens/home_screen.dart';
 import 'package:zuri_task/screens/login_screen.dart';
 import 'package:zuri_task/screens/registration_screen.dart';
+import 'package:zuri_task/screens/resetPassword_screen.dart';
 import 'package:zuri_task/screens/splash_screen.dart';
 
 void main() async {
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
      // home: Home(),
         initialRoute: '/',
         routes: {
@@ -26,6 +28,7 @@ class MyApp extends StatelessWidget {
           LoginScreen.routeName: (ctx) => LoginScreen(),
           Home.routeName: (ctx) => Home(),
           ForgotPasswordScreen.routeName: (ctx) => ForgotPasswordScreen(),
+          ResetPasswordScreen.routeName: (ctx) => ResetPasswordScreen(),
           RegistrationScreen.routeName: (ctx) => RegistrationScreen(),
           SplashScreen.routeName: (ctx) => SplashScreen(),
         }

@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:zuri_task/screens/login_screen.dart';
 import 'package:zuri_task/styles/styles.dart';
 
+import '../resources/auth_methods.dart';
+import '../utils/utils.dart';
+import '../widgets/text_field_input.dart';
+
 class RegistrationScreen extends StatefulWidget {
   static const routeName = '/registration';
+
   const RegistrationScreen({Key? key}) : super(key: key);
 
   @override
@@ -11,10 +16,58 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-  bool _isObscure = true;
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _occupationController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  bool _isLoading = false;
 
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  @override
+  void dispose() {
+    super.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _nameController.dispose();
+    _occupationController.dispose();
+    _addressController.dispose();
+  }
+
+  // bool _isObscure = true;
+
+  void signUpUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+    String res = await AuthMethods().signUpUser(
+      email: _emailController.text,
+      password: _passwordController.text,
+      name: _nameController.text,
+      address: _addressController.text,
+      occupation: _occupationController.text,
+    );
+
+    setState(() {
+      _isLoading = false;
+    });
+
+    if (res != 'success') {
+      showSnackBar(res, context);
+    } else {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const LoginScreen(),
+        ),
+      );
+      //test run
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.black,
+          content: Text('Account created successfully!'),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,68 +85,35 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               ),
             ),
             SizedBox(height: 20),
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Full Name',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              style: Styles.textTextStyle,
+            TextFieldInput(
+              hintText: 'Enter your name',
+              textInputType: TextInputType.text,
+              textEditingController: _nameController,
             ),
             SizedBox(height: 20),
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Address',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              style: Styles.textTextStyle,
+            TextFieldInput(
+              hintText: 'Enter your address',
+              textInputType: TextInputType.text,
+              textEditingController: _addressController,
             ),
             SizedBox(height: 20),
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Age',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              style: Styles.textTextStyle,
-              keyboardType: TextInputType.number,
+            TextFieldInput(
+              hintText: 'Enter your occupation',
+              textInputType: TextInputType.text,
+              textEditingController: _occupationController,
             ),
             SizedBox(height: 20),
-            TextField(
-              controller: emailController,
-              decoration: InputDecoration(
-                labelText: 'Email',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              style: Styles.textTextStyle,
+            TextFieldInput(
+              hintText: 'Enter your email',
+              textInputType: TextInputType.emailAddress,
+              textEditingController: _emailController,
             ),
             SizedBox(height: 20),
-            TextField(
-              controller: passwordController,
-              obscureText: _isObscure,
-              decoration: InputDecoration(
-                labelText: 'Password',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    _isObscure ? Icons.visibility : Icons.visibility_off,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      _isObscure = !_isObscure;
-                    });
-                  },
-                ),
-              ),
-              style: Styles.textTextStyle,
+            TextFieldInput(
+              hintText: 'Enter your password',
+              textInputType: TextInputType.text,
+              textEditingController: _passwordController,
+              isPass: true,
             ),
             SizedBox(height: 20),
             //Button
@@ -101,16 +121,19 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               width: double.infinity,
               height: 60,
               child: ElevatedButton(
-                child: Text(
-                  'Register',
-                  textAlign: TextAlign.center,
-                  style: Styles.buttonTextStyle,
-                ),
-                onPressed: () {
-                  Navigator.of(context).pushNamed(
-                    LoginScreen.routeName,
-                  );
-                },
+                child: _isLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                        ),
+                      )
+                    : Text(
+                        'Register',
+                        textAlign: TextAlign.center,
+                        style: Styles.buttonTextStyle,
+                      ),
+                onPressed: signUpUser,
+
                 style: Styles.buttonStyle,
               ),
             ),

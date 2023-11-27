@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:zuri_task/screens/registration_screen.dart';
 import 'package:zuri_task/styles/styles.dart';
 
+import 'login_screen.dart';
+
 class SplashScreen extends StatefulWidget {
   static const routeName = '/splashscreen';
   @override
@@ -41,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
             SizedBox(height: 300),
             Center(
               child: Text(
-                'ZURI TASK',
+                'ZURI TASK V2.0',
                 style: Styles.splashStyle,
               ),
             ),
